@@ -5,7 +5,6 @@ import requests
 
 
 def counting(phrase):
-    a_letters = ['а', 'е', 'ё', 'и', 'о', 'у', 'э', 'ю', 'я', 'ы']
     quantity_slogs = 0  # Переменная с количеством гласных в строке
     phrase = phrase.split()
     for letter_in_a_row in phrase[-1].lower():  # Перебираем все буквы в строке
@@ -22,13 +21,16 @@ def rhyme(sentenc):
     sentence = ''
     for elem in sentenc.split()[-1]:
         if elem.lower() in alp:
-            sentence += elem
+            sentence += elem.lower()
 
     if sentence:
         for i in sentence.split():
             if i not in words:
                 new_words.write(i + '\n')
-
+        if (sentence.split()[-1][-1] == 'ь') and (sentence.split()[-1][-2] == 'ш'):
+            for word in words:
+                if (len(word) > 4) and ((sentence.split()[-1][-3] == word[-3]) or (sentence.split()[-1][-3] == word[-2])) and (word[-1] not in a_letters):
+                    return word
         for word in words:
             if (sentence.split()[-1][-1] == word[-1]) and (sentence.split()[-1][-2] == word[-2]) and (counting(sentence) == counting(word)):
                 return word
@@ -64,7 +66,7 @@ def main():
 
 
 alp = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
-
+a_letters = ['а', 'е', 'ё', 'и', 'о', 'у', 'э', 'ю', 'я', 'ы']
 
 if __name__ == '__main__':
     main()
